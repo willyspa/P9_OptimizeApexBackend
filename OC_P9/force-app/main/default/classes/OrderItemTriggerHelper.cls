@@ -1,7 +1,7 @@
 public with sharing class OrderItemTriggerHelper {
     
-    public static void orderUpdate(List<OrderItem> orderItems) {
-		System.debug('helper');
+    public static void totalAmountUpdate(List<OrderItem> orderItems) {
+	
         Set<Id> orderIds = new Set<Id>();
         List<Order> orders = new List<Order>();
         List<OrderItem> relatedOrderItems = new List<OrderItem>();
@@ -15,9 +15,8 @@ public with sharing class OrderItemTriggerHelper {
         }
 
         orders = [SELECT Id, TotalAmount FROM Order WHERE Id IN :orderIds];
-        relatedOrderItems = [SELECT Id, TotalPrice FROM OrderItem WHERE OrderId IN :orderIds];
-
-			
+        relatedOrderItems = [SELECT Id, TotalPrice, OrderId FROM OrderItem WHERE OrderId IN :orderIds];
+	
          for(OrderItem item:relatedOrderItems){
             
                 orderIdsXTotalAmount.put(item.OrderId,orderIdsXTotalAmount.get(item.OrderId)+item.Totalprice);
@@ -32,4 +31,23 @@ public with sharing class OrderItemTriggerHelper {
          update orders;
 
     }
+    public static void totalAmountDelete(List<OrderItem> orderItems){
+
+        Set<Id> orderIds = new Set<Id>();
+        List<Order> orders = new List<Order>();
+        Map<Id, Double> orderIdsXOrderItem = new Map<Id, Double>();
+
+        for(OrderItem item:orderItems){
+            orderIds.add(item.OrderId);
+            orderIdsXOrderItem.put(item.OrderId,item.TotalPrice);
+         }
+
+         orders = [SELECT Id, TotalAmount__c FROM Order WHERE Id IN :orderIds];
+
+         for(Order order:orders){
+             order.TotalAmount__c = order.TotalAmount__c - orderIdsXOrderItem.get(order.Id);
+         }
+
+         update orders;
+    }    
 }
