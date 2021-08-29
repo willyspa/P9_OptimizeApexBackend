@@ -17,11 +17,8 @@ public with sharing class OrderItemTriggerHelper {
         orders = [SELECT Id, TotalAmount FROM Order WHERE Id IN :orderIds];
         relatedOrderItems = [SELECT Id, TotalPrice, OrderId FROM OrderItem WHERE OrderId IN :orderIds];
 	
-         for(OrderItem item:relatedOrderItems){
-            
+         for(OrderItem item:relatedOrderItems){          
                 orderIdsXTotalAmount.put(item.OrderId,orderIdsXTotalAmount.get(item.OrderId)+item.Totalprice);
-				System.debug('total amount:'+orderIdsXTotalAmount.get(item.OrderId));
-             	System.debug('total price:'+ item.TotalPrice);
          }
 
          for(Order order:orders){
