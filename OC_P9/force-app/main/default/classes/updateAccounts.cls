@@ -1,4 +1,5 @@
-public with sharing class updateAccounts {
+public with sharing class UpdateAccounts {
+    
     public static void turnover(List<Account> accounts) {
       
         List<Order> relatedOrders = new List<Order>();
