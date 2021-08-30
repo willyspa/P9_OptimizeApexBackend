@@ -1,7 +1,7 @@
-<apex:page controller="VFC01_Team" >
-    <div>
-        <h1>
-            Sum of my team orders: <apex:outputText value="{!SumOders}" />
-        </h1>
-    </div>
+<apex:page controller="MyTeamOrdersController">
+<!-- Begin Default Content REMOVE THIS -->
+<h1>Congratulations</h1>
+This is your new Page
+{!totalSOQL}
+<!-- End Default Content REMOVE THIS -->
 </apex:page>
