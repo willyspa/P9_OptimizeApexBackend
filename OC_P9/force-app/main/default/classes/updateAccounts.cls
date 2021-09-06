@@ -11,7 +11,7 @@ public with sharing class UpdateAccounts {
             AccountIdXTurnover.put(acct.Id,0);
         }
 
-        relatedOrders = [SELECT Id, TotalAmount__c, Accountid FROM Order WHERE Accountid IN :accountIds];
+        relatedOrders = [SELECT Id, TotalAmount__c, Accountid FROM Order WHERE Accountid IN :accountIds AND Status = 'ordered'];
 
         for(Order order:relatedOrders){
             AccountIdXTurnover.put(order.AccountId,AccountIdXTurnover.get(order.AccountId)+order.TotalAmount__c );
