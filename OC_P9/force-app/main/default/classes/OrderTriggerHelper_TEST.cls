@@ -3,7 +3,6 @@ public with sharing class OrderTriggerHelper_TEST {
     
     @TestSetup
     static void makeData(){
-        
         Account acct = TestDataFactory.createAccounts(1)[0];
         insert acct;
         Contract ctr = TestDataFactory.createContracts(1,acct.Id)[0];
@@ -14,7 +13,7 @@ public with sharing class OrderTriggerHelper_TEST {
         insert book;
         List<Product2> products = TestDataFactory.createProduct2(2);
         insert products;
-        List<PriceBookEntry> bookEntries = TestDataFactory.createPriceBookEntry(2,Test.getStandardPricebookId(),products);
+        List<PriceBookEntry> bookEntries = TestDataFactory.createPriceBookEntry(Test.getStandardPricebookId(),products);
         insert bookEntries;
         List<OrderItem> orderItems = TestDataFactory.createOrderItems(orders[0].Id,bookEntries);
         insert orderItems;
@@ -36,7 +35,6 @@ public with sharing class OrderTriggerHelper_TEST {
         update orders;
         
         System.AssertEquals(2,[SELECT Id FROM Order].size());
-        System.AssertEquals(10000,[SELECT Id,turnover__c FROM Account LIMIT 1].turnover__c);
-        
+        System.AssertEquals(10000,[SELECT Id,turnover__c FROM Account LIMIT 1].turnover__c);        
     }
 }

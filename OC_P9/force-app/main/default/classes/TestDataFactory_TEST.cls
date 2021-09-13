@@ -14,7 +14,7 @@ public with sharing class TestDataFactory_TEST {
         insert book;
         List<Product2> products = TestDataFactory.createProduct2(2);
         insert products;
-        List<PriceBookEntry> bookEntries = TestDataFactory.createPriceBookEntry(2,Test.getStandardPricebookId(),products);
+        List<PriceBookEntry> bookEntries = TestDataFactory.createPriceBookEntry(Test.getStandardPricebookId(),products);
         insert bookEntries;
         List<OrderItem> orderItems = TestDataFactory.createOrderItems(order.Id,bookEntries);
         insert orderItems;
