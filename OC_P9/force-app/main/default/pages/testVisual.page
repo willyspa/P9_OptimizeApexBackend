@@ -1,0 +1,25 @@
+<apex:page standardController="Contact" extensions="contactsByAccount_extension" >
+
+  <table border="1" cellspacing="0" width="60%">
+    <thead>
+        <th> Account </th>
+        <th> Title </th>
+        <th> Name </th>
+        <th> Email </th>
+    </thead>
+       
+    <apex:repeat value="{!contactsByAccount}" var="key" >
+      
+      <apex:repeat value="{!contactsByAccount[key].contactList}" var="keyvalue" > 
+        <tr> 
+           <td rowspan="{!contactsByAccount[key].numOfContacts}" style="display:{!IF(CASESAFEID(keyvalue.id)==CASESAFEID(contactsByAccount[key].firstOfList), 'table-data','none' )};"> {!keyvalue.Account.name} </td>
+          <td> {!keyvalue.Title} </td>
+          <td> {!keyvalue.Name} </td>
+          <td> {!keyvalue.Email} </td>  
+        </tr>
+      </apex:repeat>
+      
+    </apex:repeat> 
+  </table>
+    
+</apex:page>
