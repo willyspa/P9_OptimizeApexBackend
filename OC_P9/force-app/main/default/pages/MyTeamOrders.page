@@ -1,14 +1,16 @@
-<apex:page controller="MyTeamOrdersController">
-    <apex:form >
-        <apex:pageBlock title="Orders List" id="orders_list">
-            	<!-- Contacts List -->
-                <apex:pageBlockTable value="{! orders }" var="o">
-                <apex:column value="{! o.Id }"/>
-                <apex:column value="{! o.AccountId }"/>
-                <apex:column value="{! o.Status }"/>
-                <apex:column value="{! o.OwnerId }"/>
-                <apex:column value="{! o.EffectiveDate }"/>
-			</apex:pageBlockTable>
+<apex:page Controller="ContactsByAccount_extension" >
+
+	<apex:repeat value="{!orders}" var="owner">
+    	<apex:pageBlock >
+    		<apex:pageBlockSection title="{!owner}">
+        		<apex:pageBlockTable value="{!orders[owner]}" var="e">
+            		<apex:column value="{!e.id}"/>
+            		<apex:column value="{!e.status}"/>
+            		<apex:column value="{!e.AccountId}"/>
+            		<apex:column value="{!e.owner.Name}"/>
+                </apex:pageBlockTable>
+    		</apex:pageBlockSection>
         </apex:pageBlock>
-    </apex:form>
+	</apex:repeat>
+    
 </apex:page>
