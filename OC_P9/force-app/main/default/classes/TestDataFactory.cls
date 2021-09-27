@@ -15,40 +15,44 @@ public class TestDataFactory {
         
         return accts;
     }
-    
-    public static List<Contract> createContracts(Integer numCtrs,Id acct) {
+    public static List<Contract> createContracts(Integer numCtrs,List<Account> accts) {
         
         List<Contract> ctrs = new List<Contract>();
         
-        for(Integer i=0;i<numCtrs;i++) {
-            
-            Contract contract = New Contract(AccountId = acct,
-                                            ContractTerm = i+1, 
-                                            Status = 'Draft',
-                                            StartDate = system.today()+1);
-                                            
-            ctrs.add(contract);
+        for(Account acct:accts){        
+        	for(Integer i=0;i<numCtrs;i++) {
+            	Contract contract = New Contract(AccountId = acct.id,
+                                	ContractTerm = i+1, 
+                                    Status = 'Draft',
+                                    StartDate = system.today()+1);                                            
+            	ctrs.add(contract);
+        }
         }
         
         return ctrs;
     }
 
-    public static List<Order> createOrders(Integer numOrders,Id acct,Contract ctr,Id pricebookId) {
+    public static List<Order> createOrders(Integer numOrders,Account acct,Id pricebookId) {
         
         List<Order> orders = new List<Order>();
-        ctr.Status  = 'Activated';
-        update ctr;
         
         for(Integer i=0;i<numOrders;i++) {
             
-            Order order = New Order(AccountId = acct,
-                                    ContractId = ctr.Id,
+            Contract contract = New Contract(AccountId = acct.Id,
+                                            ContractTerm = i+1, 
+                                            Status = 'Draft',
+                                            StartDate = system.today()+1);
+            insert contract;
+            contract.Status  = 'Activated';
+            update contract;
+            
+            Order order = New Order(AccountId = acct.Id,
+                                    ContractId = contract.Id,
                                     EffectiveDate = system.today()+2,
                                     Status='Draft',
                                     ShipmentCost__c= 1000,
                                    	Pricebook2Id = pricebookId);
-
-                                            
+			                                            
             orders.add(order);
         }
         

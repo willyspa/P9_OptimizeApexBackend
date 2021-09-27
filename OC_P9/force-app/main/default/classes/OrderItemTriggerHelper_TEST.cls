@@ -5,9 +5,7 @@ public with sharing class OrderItemTriggerHelper_TEST {
     static void makeData(){
         Account acct = TestDataFactory.createAccounts(1)[0];
         insert acct;
-        Contract ctr = TestDataFactory.createContracts(1,acct.Id)[0];
-        insert ctr;
-        List<Order> orders = TestDataFactory.createOrders(1, acct.Id,ctr,Test.getStandardPricebookId());
+        List<Order> orders = TestDataFactory.createOrders(1, acct, Test.getStandardPricebookId());
         insert orders;
         Pricebook2 book = TestDataFactory.createPricebook2(1)[0];
         insert book;
