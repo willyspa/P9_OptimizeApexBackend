@@ -2,7 +2,6 @@ public with sharing class OrderTriggerHelper {
 
     public static void UpdateAccountCA(List<Order> orders, Map<Id,Order> ordersOldMap) {
 
-
         List<Order> relatedOrders = new List<Order>();
         List<Account> accounts = new List<Account>();
         Set<Id> accountIds = new Set<Id>();

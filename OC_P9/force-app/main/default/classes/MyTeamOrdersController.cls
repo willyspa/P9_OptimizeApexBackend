@@ -1,9 +1,10 @@
 public class MyTeamOrdersController {
     
-  Map<String, List<Order>> ordersByOwner = new Map<String,List<Order>>();
-  List<Order> relatedOrders = new List<Order>();
-    
-  public Map<String, List<Order>> getOrders() {
+  public static Map<String, List<Order>> getOrders() {
+
+    Map<String, List<Order>> ordersByOwner = new Map<String,List<Order>>();
+  	List<Order> relatedOrders = new List<Order>();  
+      
     List<Order> orders = [SELECT Owner.Name,Id,Status,AccountId FROM Order WHERE status = 'ordered'];
     
     for(Order o :orders){      

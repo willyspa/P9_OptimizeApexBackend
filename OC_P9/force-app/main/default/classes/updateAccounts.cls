@@ -1,7 +1,7 @@
 public with sharing class UpdateAccounts {
     
     public static void turnover(List<Account> accounts) {
-      
+      	
         List<Order> relatedOrders = new List<Order>();
         Set<Id> accountIds = new Set<Id>();
         Map<Id,Double> AccountIdXTurnover = new Map<Id,Double>();
@@ -14,6 +14,7 @@ public with sharing class UpdateAccounts {
         relatedOrders = [SELECT Id, TotalAmount__c, Accountid FROM Order WHERE Accountid IN :accountIds AND Status = 'ordered'];
 
         for(Order order:relatedOrders){
+            System.debug('batch:'+order.totalAmount__c);
             AccountIdXTurnover.put(order.AccountId,AccountIdXTurnover.get(order.AccountId)+order.TotalAmount__c );
         }
 
