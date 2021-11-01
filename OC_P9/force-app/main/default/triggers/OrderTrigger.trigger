@@ -9,6 +9,6 @@ trigger OrderTrigger on Order (after insert, after update, after delete) {
     }
     if(Trigger.isDelete){
         OrderTriggerHelper.UpdateAccountCAOnDelete(Trigger.old);
-    }*/
-    
+    }
+    */
 }

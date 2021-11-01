@@ -13,7 +13,7 @@ public class UpdateAccountsSchedulable_TEST {
     CronTrigger ct = [SELECT CronExpression FROM CronTrigger WHERE Id = :jobId];
     //Check if the cron expression is correct
     System.assertEquals('0 0 12 * * ?', String.valueOf(ct.CronExpression));
-        
+	        
     Test.stopTest();
         
     }

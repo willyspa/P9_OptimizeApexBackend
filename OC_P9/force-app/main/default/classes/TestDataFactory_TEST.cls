@@ -12,7 +12,9 @@ public with sharing class TestDataFactory_TEST {
         
         System.debug('Number of pricebook: '+[select id from Pricebook2 where isStandard=true].size());
         Order order = TestDataFactory.createOrders(1, accts[0], Test.getStandardPricebookId(),null)[0];
+        Order order2 = TestDataFactory.createOrders(1, accts[0], Test.getStandardPricebookId(),ctrs[0])[0];
         insert order;
+        insert order2;
         
         Pricebook2 book = TestDataFactory.createPricebook2(1)[0];
         insert book;
@@ -33,7 +35,7 @@ public with sharing class TestDataFactory_TEST {
         
         System.debug([SELECT Id FROM Account].size());
         System.AssertEquals(1,[SELECT Id FROM Account].size());        
-        System.AssertEquals(1,[SELECT Id FROM Order].size());        
+        System.AssertEquals(2,[SELECT Id FROM Order].size());        
         System.AssertEquals(1,[SELECT Id FROM PriceBook2].size());
         System.AssertEquals(2,[SELECT Id FROM Product2].size());        
         System.AssertEquals(2,[SELECT Id FROM PriceBookEntry].size());

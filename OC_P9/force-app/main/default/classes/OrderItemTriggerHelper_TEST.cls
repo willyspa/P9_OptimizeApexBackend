@@ -9,7 +9,7 @@ public with sharing class OrderItemTriggerHelper_TEST {
         insert orders;
         Pricebook2 book = TestDataFactory.createPricebook2(1)[0];
         insert book;
-        List<Product2> products = TestDataFactory.createProduct2(2);
+        List<Product2> products = TestDataFactory.createProduct2(200);
         insert products;
         List<PriceBookEntry> bookEntries = TestDataFactory.createPriceBookEntry(Test.getStandardPricebookId(),products);
         insert bookEntries;
@@ -22,16 +22,16 @@ public with sharing class OrderItemTriggerHelper_TEST {
         
         Test.startTest();
         //check if the right number of orderItem was inserted in the database
-        System.AssertEquals(2,[SELECT Id FROM OrderItem].size());
+        System.AssertEquals(200,[SELECT Id FROM OrderItem].size());
         //Net Amount must be set to 9000 => 2 OrderItem at 5000 minus the shipmentCost 1000
-        System.AssertEquals(9000,[SELECT NetAmount__c FROM Order][0].NetAmount__c);
+        System.AssertEquals(999000,[SELECT NetAmount__c FROM Order][0].NetAmount__c);
         
-        delete [SELECT Id FROM OrderItem][0];
+        delete [SELECT Id FROM OrderItem LIMIT 100];
         
         //check if the right number of data was deleted in the database
-        System.AssertEquals(1,[SELECT Id FROM OrderItem].size());
+        System.AssertEquals(100,[SELECT Id FROM OrderItem].size());
         //Net Amount must be set to 4000 => 1 OrderItem at 5000 minus the shipmentCost 1000
-        System.AssertEquals(4000,[SELECT NetAmount__c FROM Order][0].NetAmount__c);
+        System.AssertEquals(499000,[SELECT NetAmount__c FROM Order][0].NetAmount__c);
         
         Test.stopTest();
     }

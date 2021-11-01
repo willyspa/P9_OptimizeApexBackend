@@ -29,6 +29,7 @@ public with sharing class OrderItemTriggerHelper {
          update orders;
 
     }
+    /*
 	//Substract to the Order total Amount any delete of order Item
     public static void totalAmountDelete(List<OrderItem> orderItems){
 
@@ -48,5 +49,5 @@ public with sharing class OrderItemTriggerHelper {
          }
 
          update orders;
-    }  
+    }  */
 }
