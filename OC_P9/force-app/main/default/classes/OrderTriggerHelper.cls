@@ -2,6 +2,7 @@ public with sharing class OrderTriggerHelper {
 
     public static void UpdateAccountCA(List<Order> orders, Map<Id,Order> ordersOldMap) {
 
+
         List<Order> relatedOrders = new List<Order>();
         List<Account> accounts = new List<Account>();
         Set<Id> accountIds = new Set<Id>();
@@ -16,7 +17,7 @@ public with sharing class OrderTriggerHelper {
                 AccountIdXTurnover.put(order.AccountId,0);
             }
         }
-        // penser a verifier l'utilité de la condition
+
         if(accountIds.size() != 0){
 
             relatedOrders = [SELECT id, AccountId, TotalAmount__c FROM Order WHERE AccountId IN :accountIds AND TotalAmount__c != NULL AND Status = 'Ordered'];

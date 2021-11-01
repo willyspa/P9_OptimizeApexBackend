@@ -1,11 +1,11 @@
 @isTest
 public with sharing class OrderItemTriggerHelper_TEST {
-    
+    //Create data using the data factory
     @TestSetup
     static void makeData(){
         Account acct = TestDataFactory.createAccounts(1)[0];
         insert acct;
-        List<Order> orders = TestDataFactory.createOrders(1, acct, Test.getStandardPricebookId());
+        List<Order> orders = TestDataFactory.createOrders(1, acct, Test.getStandardPricebookId(),null);
         insert orders;
         Pricebook2 book = TestDataFactory.createPricebook2(1)[0];
         insert book;
@@ -20,13 +20,20 @@ public with sharing class OrderItemTriggerHelper_TEST {
     @isTest
     static void testData(){
         
-        System.AssertEquals(2,[SELECT Id FROM OrderItem].size());        
+        Test.startTest();
+        //check if the right number of orderItem was inserted in the database
+        System.AssertEquals(2,[SELECT Id FROM OrderItem].size());
+        //Net Amount must be set to 9000 => 2 OrderItem at 5000 minus the shipmentCost 1000
         System.AssertEquals(9000,[SELECT NetAmount__c FROM Order][0].NetAmount__c);
         
         delete [SELECT Id FROM OrderItem][0];
         
-        System.AssertEquals(1,[SELECT Id FROM OrderItem].size()); 
+        //check if the right number of data was deleted in the database
+        System.AssertEquals(1,[SELECT Id FROM OrderItem].size());
+        //Net Amount must be set to 4000 => 1 OrderItem at 5000 minus the shipmentCost 1000
         System.AssertEquals(4000,[SELECT NetAmount__c FROM Order][0].NetAmount__c);
+        
+        Test.stopTest();
     }
         
 

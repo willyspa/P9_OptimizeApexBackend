@@ -2,7 +2,7 @@
 public with sharing class MyTeamOrderController_TEST {
 	
 	Map<String,List<Order>> ownerXOrders = new Map<String,List<Order>>();   
-    
+    //Create data using the data factory
     @TestSetup
     static void makeData(){
         
@@ -10,7 +10,7 @@ public with sharing class MyTeamOrderController_TEST {
         insert accts;
         
         System.debug('Number of pricebook: '+[select id from Pricebook2 where isStandard=true].size());
-        Order order = TestDataFactory.createOrders(1, accts[0], Test.getStandardPricebookId())[0];
+        Order order = TestDataFactory.createOrders(1, accts[0], Test.getStandardPricebookId(),null)[0];
         insert order;
         
         Pricebook2 book = TestDataFactory.createPricebook2(1)[0];
@@ -27,9 +27,14 @@ public with sharing class MyTeamOrderController_TEST {
         order.Status = 'ordered';
         update order;
     }
-    
+    //Check if the controller return the right number of orders
     @isTest
-    static void testData(){			
-		System.assertEquals(1,MyTeamOrdersController.getOrders().size());         
+    static void testData(){
+        
+        Test.startTest();
+        
+		System.assertEquals(1,MyTeamOrdersController.getOrders().size());
+        
+        Test.stopTest();
     }
 }
