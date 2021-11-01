@@ -23,14 +23,14 @@ public with sharing class OrderItemTriggerHelper_TEST {
         Test.startTest();
         //check if the right number of orderItem was inserted in the database
         System.AssertEquals(200,[SELECT Id FROM OrderItem].size());
-        //Net Amount must be set to 9000 => 2 OrderItem at 5000 minus the shipmentCost 1000
+        //Net Amount must be set to 999 000 => 200 OrderItem at 5000 minus the shipmentCost 1000
         System.AssertEquals(999000,[SELECT NetAmount__c FROM Order][0].NetAmount__c);
         
         delete [SELECT Id FROM OrderItem LIMIT 100];
         
         //check if the right number of data was deleted in the database
         System.AssertEquals(100,[SELECT Id FROM OrderItem].size());
-        //Net Amount must be set to 4000 => 1 OrderItem at 5000 minus the shipmentCost 1000
+        //Net Amount must be set to 499000 => 100 OrderItem at 5000 minus the shipmentCost 1000
         System.AssertEquals(499000,[SELECT NetAmount__c FROM Order][0].NetAmount__c);
         
         Test.stopTest();
